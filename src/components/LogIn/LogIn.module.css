@@ -1,4 +1,5 @@
 .LogIn_container {
+  
   margin: 0 auto;
   max-width: 1550px;
   width: 100%;
@@ -17,7 +18,12 @@
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
+.loginbox {
+  display: flex;
+  gap: 32px;
 
+
+}
 .LogIn_container::before {
   content: "";
   position: absolute;
@@ -25,12 +31,18 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('../../images/png/v8.jpg');
+  background-image: url('../../images/png/Background111.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0.5;
   z-index: -1;
+}
+.inputbox {
+  display: flex;
+  flex-direction: column;
+
+  
 }
 .LogIn_cont {
   border: 1px solid #dbdbdb;

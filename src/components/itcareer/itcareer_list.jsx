@@ -15,7 +15,7 @@ function ItCareerList() {
             <p className="p_12SmallGrey">Nikita</p>
             <p className="p_12SmallGrey">sent a message</p>
             <p className="p_12SmallGrey">·</p>
-            <p className="p_12SmallGrey">2 wek</p>
+            <p className="p_12SmallGrey">4 wek</p>
           </div>
         </div>
       </div>

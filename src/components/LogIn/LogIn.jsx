@@ -9,6 +9,7 @@ import ICH from "../../images/svg/ICH2.svg";
 import Button from "../ButtonHub/btn.jsx";
 import { $api } from "../../utils/api.ts";
 import styles from "./LogIn.module.css";
+import phone from "../../images/png/Background111.png";
 
 const validationSchema = Yup.object().shape({
   emailOrUsername: Yup.string().required("Введите email или имя пользователя"),
@@ -48,11 +49,13 @@ function LogIn() {
 
   return (
     <FadeTransition>
-      <div>
+      <div className={styles.loginbox}>
+<div className={styles.phonesimage}><img src={phone} alt="" /> </div>
         <div className={styles.LogIn_cont}>
           <div>
             <img src={ICH} alt="logo" />
           </div>
+          <div className={styles.inputbox}>
           <form className={styles.Login_form} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.login_cont_inp}>
               <div className={styles.LogIn_cont_input}>
@@ -106,6 +109,7 @@ function LogIn() {
           <Link to="/signup" className="p_14Blue">
             {t("signup")}
           </Link>
+        </div>
         </div>
       </div>
     </FadeTransition>

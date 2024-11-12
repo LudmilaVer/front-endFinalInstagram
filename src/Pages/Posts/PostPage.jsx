@@ -2,7 +2,7 @@ import React from "react";
 import Avatar from "../../images/png/ava1.png";
 import Like from "../../images/svg/heart-like.svg";
 import smile from '../../images/svg/smile.svg'
-
+import PostsExplore from '../Posts/PostsExplore';
 import { Link } from "react-router-dom";
 
 import styles from "./PostPage.module.css";
@@ -98,5 +98,10 @@ function PostPage() {
     </div>
   );
 }
+
+            
+{{selectedPost && (
+     <PostsExplore post={selectedPost} onClose={handleClose} />
+)} }
 
 export default PostPage;

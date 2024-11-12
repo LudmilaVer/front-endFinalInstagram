@@ -1,5 +1,5 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
+
 
 import LogoName from "../../images/svg/ICHGRA 5.svg";
 import Home from "../../images/svg/Vector.svg";
@@ -16,11 +16,9 @@ import styles from "./container.module.css";
 
 
 function Container() {
-    const { i18n } = useTranslation();
+  
 
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-    };
+
 
     return (
         <div className={styles.container}>
@@ -38,10 +36,7 @@ function Container() {
             <div className={styles.container_profile}>
                 <ListItem icon={Profile} textKey="profile" path="/profile" />
             </div>
-            <div className={styles.languageSwitcher}>
-                <button onClick={() => changeLanguage("en")}>EN</button>
-                <button onClick={() => changeLanguage("ru")}>RU</button>
-            </div>
+         
         </div>
     );
 }

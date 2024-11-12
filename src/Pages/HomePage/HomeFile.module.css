@@ -15,6 +15,7 @@
 .cont_up {
     margin-bottom: 6px;
     display: flex;
+
     align-items: center;
     gap: 0.5rem;
 }

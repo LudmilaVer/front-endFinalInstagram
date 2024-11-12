@@ -2,7 +2,7 @@
   margin: 0 auto;
   /* flex: 1; */
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column; 
   justify-content: center;
   /* align-items: center; */
   padding: 2% 0 1rem 5%;
