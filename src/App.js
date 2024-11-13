@@ -20,6 +20,7 @@ import ProfileUser from "./Pages/ProfUser/ProfileUser";
 import ProtectedRoute from './components/ProtectedRoute';
 import PostList from "./components/PostList";
 import Test from "./components/Test";
+import ProfileCurrent from "./Pages/ProfileCurrent/ProfileCurrent";
 
 
 
@@ -50,7 +51,8 @@ function App() {
             path="/profile" 
             element={
               <ProtectedRoute>
-                <Profile />
+                {/* <Profile /> */}
+                <ProfileCurrent/>
               </ProtectedRoute>
             } 
           />
