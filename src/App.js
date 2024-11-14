@@ -13,14 +13,14 @@ import AuthContainer from "./components/LogIn/AuthContainer";
 import HomePage from './Pages/HomePage/HomePage';
 import Profile from './Pages/Profile/Profile';
 import Edit from './Pages/Edit/Edit';
-// import Posts from './Pages/Posts/Posts';
+import Posts from './Pages/Posts/Posts';
 import NotFound from './Pages/NotFound/NotFound';
 import CreatePost from "./Pages/CreatePost/CreatePost";
 import ProfileUser from "./Pages/ProfUser/ProfileUser";
 import ProtectedRoute from './components/ProtectedRoute';
 import PostList from "./components/PostList";
 import Test from "./components/Test";
-import ProfileCurrent from "./Pages/ProfileCurrent/ProfileCurrent";
+
 
 
 
@@ -43,7 +43,7 @@ function App() {
           <Route path="/profuser/:userId" element={<ProfileUser />} />
           <Route path="/messages" element={<MessagesPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
-          {/* <Route path="/posts" element={<Posts />} /> */}
+          <Route path="/posts" element={<Posts />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/profuser" element={<ProfileUser />} />
           <Route path="create" element={<CreatePost />} />
@@ -51,8 +51,8 @@ function App() {
             path="/profile" 
             element={
               <ProtectedRoute>
-                {/* <Profile /> */}
-                <ProfileCurrent/>
+                <Profile />
+             
               </ProtectedRoute>
             } 
           />

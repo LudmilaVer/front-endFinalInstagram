@@ -1,12 +1,24 @@
-// src/store/slices/postSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { $api } from '../../utils/api.ts';
 
 // Получение всех постов
-export const fetchPosts = createAsyncThunk('post/fetchPosts', async () => {
-  const response = await $api.get('/post');
-  return response.data;
+export const fetchPosts = createAsyncThunk('post/fetchPosts', async (_, { rejectWithValue }) => {
+  try {
+    const response = await $api.get('/post');
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data || 'Ошибка при получении постов');
+  }
+});
+
+// Удаление поста
+export const deletePost = createAsyncThunk('post/deletePost', async (postId, { rejectWithValue }) => {
+  try {
+    const response = await $api.delete(`/post/${postId}`);
+    return postId; // Возвращаем только postId для обновления состояния
+  } catch (error) {
+    return rejectWithValue(error.response?.data || 'Ошибка при удалении поста');
+  }
 });
 
 // Создание postSlice
@@ -20,6 +32,7 @@ const postSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Обработка получения всех постов
       .addCase(fetchPosts.pending, (state) => {
         state.status = 'loading';
       })
@@ -29,7 +42,20 @@ const postSlice = createSlice({
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload; // Используем payload для получения rejectWithValue
+      })
+
+      // Обработка удаления поста
+      .addCase(deletePost.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.posts = state.posts.filter((post) => post._id !== action.payload);
+      })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload; // Используем payload для получения rejectWithValue
       });
   },
 });

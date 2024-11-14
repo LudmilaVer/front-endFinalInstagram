@@ -3,16 +3,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import FadeTransition from "../../components/FadeTransition";
 import ICH from "../../images/svg/ICH2.svg";
 import Button from "../Button/button.jsx";
 import { $api } from "../../utils/api.ts";
 import styles from "./LogIn.module.css";
 import phone from "../../images/png/Background111.png";
-import { useDispatch } from "react-redux";
-import { setUser, setToken } from '../../store/slices/authSlice.js';
 
-// Валидационная схема с использованием Yup
 const validationSchema = Yup.object().shape({
   emailOrUsername: Yup.string().required("Введите email или имя пользователя"),
   password: Yup.string()
@@ -21,9 +19,9 @@ const validationSchema = Yup.object().shape({
 });
 
 function LogIn() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
-  const dispatch = useDispatch();
 
   const {
     register,
@@ -40,17 +38,7 @@ function LogIn() {
         password: data.password,
       });
 
-      const { token, user } = response.data;
-
-      // Сохраняем токен и пользователя в Redux
-      dispatch(setToken(token));
-      dispatch(setUser(user));
-
-      // Сохраняем токен и пользователя отдельно в localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-
-      // Перенаправляем на домашнюю страницу
+      localStorage.setItem("token", response.data.token);
       navigate("/home");
     } catch (error) {
       setLoginError(
@@ -62,68 +50,66 @@ function LogIn() {
   return (
     <FadeTransition>
       <div className={styles.loginbox}>
-        <div className={styles.phonesimage}>
-          <img src={phone} alt="" />
-        </div>
+<div className={styles.phonesimage}><img src={phone} alt="" /> </div>
         <div className={styles.LogIn_cont}>
           <div>
             <img src={ICH} alt="logo" />
           </div>
           <div className={styles.inputbox}>
-            <form className={styles.Login_form} onSubmit={handleSubmit(onSubmit)}>
-              <div className={styles.login_cont_inp}>
-                <div className={styles.LogIn_cont_input}>
-                  <input
-                    type="text"
-                    name="emailOrUsername"
-                    placeholder="Введите email или имя пользователя"
-                    {...register("emailOrUsername")}
-                    className={styles.LogIn_inp}
-                  />
-                </div>
-                {errors.emailOrUsername && (
-                  <p className={styles.errorText}>
-                    {errors.emailOrUsername.message}
-                  </p>
-                )}
+          <form className={styles.Login_form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.login_cont_inp}>
+              <div className={styles.LogIn_cont_input}>
+                <input
+                  type="text"
+                  name="emailOrUsername"
+                  placeholder={t("email_or_username")}
+                  {...register("emailOrUsername")}
+                  className={styles.LogIn_inp}
+                />
+              </div>
+              {errors.emailOrUsername && (
+                <p className={styles.errorText}>
+                  {errors.emailOrUsername.message}
+                </p>
+              )}
 
-                <div className={styles.LogIn_cont_input}>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Введите пароль"
-                    {...register("password")}
-                    className={styles.LogIn_inp}
-                  />
-                </div>
-                {errors.password && (
-                  <p className={styles.errorText}>{errors.password.message}</p>
-                )}
-                {loginError && (
-                  <p className={styles.errorText}>{loginError}</p>
-                )}
+              <div className={styles.LogIn_cont_input}>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder={t("password")}
+                  {...register("password")}
+                  className={styles.LogIn_inp}
+                />
               </div>
-              <div className={styles.login_button}>
-                <Button text="Войти" type="submit" />
-              </div>
-              <div className={styles.login_or}>
-                <div className={styles.login_line}></div>
-                <p>или</p>
-                <div className={styles.login_line}></div>
-              </div>
-              <div className={styles.login_link}>
-                <Link to="/reset" className="p_blue">
-                  Забыли пароль?
-                </Link>
-              </div>
-            </form>
-          </div>
-          <div className={styles.login_bottom}>
-            <p className="p_14Small">Нет аккаунта?</p>
-            <Link to="/signup" className="p_14Blue">
-              Зарегистрироваться
-            </Link>
-          </div>
+              {errors.password && (
+                <p className={styles.errorText}>{errors.password.message}</p>
+              )}
+              {loginError && (
+                <p className={styles.errorText}>{loginError}</p>
+              )}
+            </div>
+            <div className={styles.login_button}>
+              <Button text={t("login")} type="submit" />
+            </div>
+            <div className={styles.login_or}>
+              <div className={styles.login_line}></div>
+              <p>{t("or")}</p>
+              <div className={styles.login_line}></div>
+            </div>
+            <div className={styles.login_link}>
+              <Link to="/reset" className="p_blue">
+                {t("forgot_password")}
+              </Link>
+            </div>
+          </form>
+        </div>
+        <div className={styles.login_bottom}>
+          <p className="p_14Small">{t("no_account")}</p>
+          <Link to="/signup" className="p_14Blue">
+            {t("signup")}
+          </Link>
+        </div>
         </div>
       </div>
     </FadeTransition>
