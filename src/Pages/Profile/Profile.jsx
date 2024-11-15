@@ -1,7 +1,8 @@
+// src/Pages/Profile/Profile.js
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCurrentUser } from "../../store/slices/userSlice";
-import { deletePost } from "../../store/slices/postSlice";
+import { fetchPostsUser, deletePost } from "../../store/slices/postSlice";
 import ProfilePosts from "../Posts/ProfilePosts";
 import styles from "./Profile.module.css";
 import { useNavigate } from "react-router-dom";
@@ -14,11 +15,15 @@ function Profile() {
   const dispatch = useDispatch();
   const [selectedPost, setSelectedPost] = useState(null);
   const { currentUser, status, error } = useSelector((state) => state.user);
+  const { posts } = useSelector((state) => state.post);
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchCurrentUser());
-  }, [dispatch]);
+    if (currentUser?._id) {
+      dispatch(fetchCurrentUser());
+      dispatch(fetchPostsUser(currentUser._id)); // Загрузка постов пользователя
+    }
+  }, [dispatch, currentUser?._id]);
 
   if (status === "loading") return <div>Loading...</div>;
   if (status === "failed") return <div>Ошибка загрузки профиля: {error}</div>;
@@ -67,8 +72,7 @@ function Profile() {
             </div>
             <div className={styles.profilePosts}>
               <p>
-                <span className="p_16Bold">{currentUser.posts_count || 0}</span>{" "}
-                posts
+                <span className="p_16Bold">{posts.length || 0}</span> posts
               </p>
               <p>
                 <span className="p_16Bold">
@@ -95,8 +99,8 @@ function Profile() {
         </div>
         {/* Список постов */}
         <div className={styles.profileList}>
-          {Array.isArray(currentUser.posts) && currentUser.posts.length > 0 ? (
-            currentUser.posts.map((post, index) => (
+          {Array.isArray(posts) && posts.length > 0 ? (
+            posts.map((post, index) => (
               <div key={post._id} className={styles.profileList_cont}>
                 <div
                   className={styles.profileList_cont_img}
